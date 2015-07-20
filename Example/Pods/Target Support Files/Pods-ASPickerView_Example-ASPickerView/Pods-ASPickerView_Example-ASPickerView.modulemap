@@ -1,0 +1,6 @@
+framework module ASPickerView {
+  umbrella header "Pods-ASPickerView_Example-ASPickerView-umbrella.h"
+
+  export *
+  module * { export * }
+}

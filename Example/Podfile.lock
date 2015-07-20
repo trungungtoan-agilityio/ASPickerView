@@ -1,0 +1,17 @@
+PODS:
+  - ASPickerView (0.1.0)
+  - Quick (0.3.1)
+
+DEPENDENCIES:
+  - ASPickerView (from `../`)
+  - Quick (~> 0.3.1)
+
+EXTERNAL SOURCES:
+  ASPickerView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ASPickerView: bc8639b16a7922dca72b568071becc4d5cbd7f70
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
+
+COCOAPODS: 0.37.2
