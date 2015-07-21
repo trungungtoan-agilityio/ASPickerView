@@ -9,72 +9,13 @@ enum ASTimePickerFormat : Int {
   case FormatSingle   //  HH
 }
 
-
+private let HOUR_TAG = 0
+private let MINUTE_TAG = 1
+private let SECOND_TAG = 2
 private let kTimeCellIndentifier = "TimeCell"
 private let kMaxTimeCount = 59
-
-// *************************************************************************
-// MARK: - DateFilterCell
-
-class DateFilterCell: UITableViewCell {
-
-  var textFont: UIFont!
-  var label: UILabel!
-  
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
-  }
-  
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-    // Initialization code
-    
-    self.selectionStyle = UITableViewCellSelectionStyle.None
-    self.contentView.backgroundColor = UIColor.clearColor()
-    self.backgroundColor = UIColor.clearColor()
-    label = UILabel(frame: self.bounds)
-    label.backgroundColor = UIColor.clearColor()
-    label.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
-    label.textAlignment = NSTextAlignment.Center
-    self.addSubview(label)
-  }
-
-  required init(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-  }
-  
-  override func setSelected(selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    if selected {
-      label.font = textFont.fontWithSize(textFont.pointSize + 7)
-      label.textColor = UIColor.whiteColor()
-    } else {
-      label.font = textFont
-      label.textColor = UIColor.blackColor()
-    }
-  }
-}
-
-
-// *************************************************************************
-// MARK: - NumberPickerTableView
-
-class NumberPickerTableView: UITableView {
-  
-  override init(frame: CGRect, style: UITableViewStyle) {
-    super.init(frame: frame, style: style)
-    
-    self.backgroundColor = UIColor.clearColor();
-    self.showsVerticalScrollIndicator = false
-    self.separatorStyle = UITableViewCellSeparatorStyle.None
-  }
-
-  required init(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-  }
-}
+private let kHourLength = 24
+private let kMinuteLength = 60
 
 // *************************************************************************
 // MARK: - ASPickerView
@@ -101,6 +42,8 @@ public class ASPickerView: UIControl {
   var separatorView: UIView!
   var padding:CGFloat = 5.0
   var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
+  
+  var currentHour = 0, currentMinute = 0, currentSecond = 0
   
   override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -137,6 +80,7 @@ public class ASPickerView: UIControl {
   func layoutView() {
     
     componentTables?.removeAll(keepCapacity: false)
+    
     var collCount = 0
     switch pickerFormat {
     case .FormatFull:
@@ -171,6 +115,7 @@ public class ASPickerView: UIControl {
       tableView.registerClass(DateFilterCell.self, forCellReuseIdentifier: kTimeCellIndentifier)
       tableView.delegate = self
       tableView.dataSource = self
+      tableView.tag = index
       println("DecelerationRate \(tableView.decelerationRate)")
       // Hacking scroll decleration rate on UITableView to slowly
       tableView.decelerationRate = 0.2
@@ -191,6 +136,9 @@ public class ASPickerView: UIControl {
   }
 }
 
+func refreshTables() {
+  
+}
 
 // *************************************************************************
 // MARK: - UIScrollView Delegate and Additional Methods
@@ -231,6 +179,18 @@ extension ASPickerView: UIScrollViewDelegate {
     
     if let tableView = scrollView as? UITableView {
       tableView.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.None)
+      
+      // Keep time index when tableview is selected
+      switch tableView.tag {
+      case MINUTE_TAG:
+        currentMinute = index
+      case SECOND_TAG:
+        currentSecond = index
+      default:
+        currentHour = index
+      }
+      
+      self.delegate?.datePickerDidChange(currentHour, minute: currentMinute, second: currentSecond)
     }
   }
 
@@ -258,7 +218,17 @@ extension ASPickerView: UITableViewDelegate {
 extension ASPickerView: UITableViewDataSource {
 
   public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return kMaxTimeCount
+    
+    switch tableView.tag {
+    case HOUR_TAG:
+      return kHourLength
+    case MINUTE_TAG:
+      return kMinuteLength
+    case SECOND_TAG:
+      return kMinuteLength
+    default:
+        return kHourLength
+    }
   }
   
   public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -299,5 +269,68 @@ extension ASPickerView: UITableViewDataSource {
   
   public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
+  }
+}
+
+// *************************************************************************
+// MARK: - DateFilterCell
+
+class DateFilterCell: UITableViewCell {
+  
+  var textFont: UIFont!
+  var label: UILabel!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    // Initialization code
+  }
+  
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    // Initialization code
+    
+    self.selectionStyle = UITableViewCellSelectionStyle.None
+    self.contentView.backgroundColor = UIColor.clearColor()
+    self.backgroundColor = UIColor.clearColor()
+    label = UILabel(frame: self.bounds)
+    label.backgroundColor = UIColor.clearColor()
+    label.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
+    label.textAlignment = NSTextAlignment.Center
+    self.addSubview(label)
+  }
+  
+  required init(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func setSelected(selected: Bool, animated: Bool) {
+    super.setSelected(selected, animated: animated)
+    
+    if selected {
+      label.font = textFont.fontWithSize(textFont.pointSize + 7)
+      label.textColor = UIColor.whiteColor()
+    } else {
+      label.font = textFont
+      label.textColor = UIColor.blackColor()
+    }
+  }
+}
+
+
+// *************************************************************************
+// MARK: - NumberPickerTableView
+
+class NumberPickerTableView: UITableView {
+  
+  override init(frame: CGRect, style: UITableViewStyle) {
+    super.init(frame: frame, style: style)
+    
+    self.backgroundColor = UIColor.clearColor();
+    self.showsVerticalScrollIndicator = false
+    self.separatorStyle = UITableViewCellSeparatorStyle.None
+  }
+  
+  required init(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }
