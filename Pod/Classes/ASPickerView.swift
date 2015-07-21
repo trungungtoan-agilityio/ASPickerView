@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 
 
-enum ASTimePickerFormat : Int {
+public enum ASTimePickerFormat : Int {
   case FormatFull = 0 //  HH : MM : SS
   case FormatNormal   //  HH : MM
   case FormatSingle   //  HH
@@ -41,16 +41,18 @@ public class ASPickerView: UIControl {
   public var delegate: ASPickerViewDelegate?
   
   /// the picker font property. Default font size -> system font 16
-  var pickerFont: UIFont = UIFont.systemFontOfSize(16)
+  public var pickerFont: UIFont = UIFont.systemFontOfSize(16)
   
   /// the picker format type property. Default is full -> HH:MM:SS
-  var pickerFormat: ASTimePickerFormat = .FormatFull
+  public var pickerFormat: ASTimePickerFormat = .FormatFull
   
   /// the custom view for center picker separator
-  var separatorView: UIView!
+  public var separatorView: UIView!
   var padding:CGFloat = 5.0
   var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
-  var pickerBackgroundColor = UIColor.whiteColor()
+  
+  @IBInspectable var pickerBackgroundColor = UIColor.whiteColor()
+  
   var currentHour = 0, currentMinute = 0, currentSecond = 0
   var currentTime: NSDate = NSDate()
   
@@ -67,7 +69,14 @@ public class ASPickerView: UIControl {
       super.init(coder: aDecoder)
   }
   
+//  override public func layoutSubviews() {
+//    self.backgroundColor = pickerBackgroundColor
+//  }
+  
   func viewInit() {
+    
+//    separatorView = UIView(frame: CGRectMake(0, 0, 20, 20))
+//    separatorView.backgroundColor = UIColor.redColor()
     
     dateFormatter.dateFormat = "H:mm:ss"
     
@@ -126,11 +135,20 @@ public class ASPickerView: UIControl {
       
       var x0 = startX + collWidth*CGFloat(index) + padding*CGFloat(index)
       
-      separatorView = UIView(frame: CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight))
-      separatorView.backgroundColor = separatorColor
-      separatorView.layer.cornerRadius = collWidth/2 - 10
-      separatorView.clipsToBounds = true
-      self.addSubview(separatorView!)
+      var sepView: UIView = UIView()
+      sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
+      if (separatorView != nil) {
+        // TODO
+//        separatorView.frame = CGRectMake(0, 0, 20, 20)
+//        sepView.addSubview(separatorView)
+      } else {
+        
+        sepView.backgroundColor = separatorColor
+        sepView.layer.cornerRadius = collWidth/2 - 10
+        sepView.clipsToBounds = true
+      }
+      
+      self.addSubview(sepView)
       
       let tFrame = CGRectMake(x0, 0, collWidth, CGRectGetHeight(self.frame))
       var tableView = NumberPickerTableView(frame: tFrame, style: UITableViewStyle.Plain)
@@ -166,7 +184,7 @@ public class ASPickerView: UIControl {
   
   :param: time NSDate
   */
-  func setTimePicker(time: NSDate = NSDate()) {
+  public func setTimePicker(time: NSDate = NSDate()) {
     currentTime = time
     println("TIME: \(dateFormatter.stringFromDate(currentTime))")
     let calendar = NSCalendar.currentCalendar()
@@ -183,13 +201,13 @@ public class ASPickerView: UIControl {
   
   :returns: NSDate
   */
-  func getTimePicker() -> NSDate? {
+  public func getTimePicker() -> NSDate? {
     var dateAsString = "\(currentHour):\(currentMinute):\(currentSecond)"
     let date = dateFormatter.dateFromString(dateAsString)
     return date
   }
   
-  public func selectMiddleRowOnScreenWithCurrentTime() {
+  func selectMiddleRowOnScreenWithCurrentTime() {
     for tableView in componentTables as [NumberPickerTableView] {
       
       var index = 0

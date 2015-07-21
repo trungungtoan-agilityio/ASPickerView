@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,8 +17,12 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YbX-jw-Oy9" customClass="ASPickerView" customModule="ASPickerView">
-                                <rect key="frame" x="60" y="184" width="200" height="200"/>
+                                <rect key="frame" x="60" y="320" width="200" height="238"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="238" id="4p0-EC-2uV"/>
+                                    <constraint firstAttribute="width" constant="200" id="GK2-FB-PyG"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="coll">
                                         <integer key="value" value="4"/>
@@ -29,10 +32,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YbX-jw-Oy9" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="164" id="5bg-Vw-NkN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YbX-jw-Oy9" secondAttribute="trailing" constant="44" id="fyj-Cv-aVG"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="YbX-jw-Oy9" secondAttribute="bottom" constant="184" id="tsY-cc-SSF"/>
-                            <constraint firstItem="YbX-jw-Oy9" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="44" id="zKA-B2-FTa"/>
+                            <constraint firstItem="YbX-jw-Oy9" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="300" id="5bg-Vw-NkN"/>
+                            <constraint firstAttribute="centerX" secondItem="YbX-jw-Oy9" secondAttribute="centerX" id="eii-n5-xB0"/>
                         </constraints>
                     </view>
                 </viewController>
