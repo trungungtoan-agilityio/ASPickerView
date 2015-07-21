@@ -16,6 +16,7 @@ private let kTimeCellIndentifier = "TimeCell"
 private let kMaxTimeCount = 59
 private let kHourLength = 24
 private let kMinuteLength = 60
+private let kMinimumCellHeight: CGFloat = 25.0
 
 // *************************************************************************
 // MARK: - ASPickerView
@@ -27,8 +28,9 @@ public class ASPickerView: UIControl {
   private var hourTableView: NumberPickerTableView!
   private var minuteTableView: NumberPickerTableView!
   private var secondTableView: NumberPickerTableView!
-  private var componentTables: [UITableView]?
-  
+  private var componentTables: [NumberPickerTableView]! = []
+  private let dateFormatter = NSDateFormatter()
+
   
   var delegate: ASPickerViewDelegate?
   
@@ -42,13 +44,14 @@ public class ASPickerView: UIControl {
   var separatorView: UIView!
   var padding:CGFloat = 5.0
   var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
-  
+  var pickerBackgroundColor = UIColor.whiteColor()
   var currentHour = 0, currentMinute = 0, currentSecond = 0
+  var currentTime: NSDate = NSDate()
   
   override public init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.backgroundColor = UIColor.whiteColor()
+    self.backgroundColor = pickerBackgroundColor
     
     self.viewInit()
     self.setDefaults()
@@ -60,7 +63,9 @@ public class ASPickerView: UIControl {
   
   func viewInit() {
     
-    cellHeight = self.frame.size.height/7
+    dateFormatter.dateFormat = "H:mm:ss"
+    
+    cellHeight = self.frame.size.height/7 > kMinimumCellHeight ? self.frame.size.height/7 : kMinimumCellHeight
     
     // Add gradoent mask on top and bottom picker
     var topGradient = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height/2))
@@ -79,7 +84,7 @@ public class ASPickerView: UIControl {
   
   func layoutView() {
     
-    componentTables?.removeAll(keepCapacity: false)
+    componentTables.removeAll(keepCapacity: false)
     
     var collCount = 0
     switch pickerFormat {
@@ -130,14 +135,57 @@ public class ASPickerView: UIControl {
         self.addSubview(separator)
       }
       
-      componentTables?.append(tableView)
+      componentTables.append(tableView)
       index++
     }
+    
+    setTimePicker()
   }
-}
-
-func refreshTables() {
   
+  /**
+  Set select time for Picker
+  
+  :param: time NSDate
+  */
+  func setTimePicker(time: NSDate = NSDate()) {
+    currentTime = time
+    println("TIME: \(dateFormatter.stringFromDate(currentTime))")
+    let calendar = NSCalendar.currentCalendar()
+    let components = calendar.components(.CalendarUnitHour | .CalendarUnitMinute | .CalendarUnitSecond, fromDate: currentTime)
+    currentHour = components.hour
+    currentMinute = components.minute
+    currentSecond = components.second
+    
+    selectMiddleRowOnScreenWithCurrentTime()
+  }
+  
+  /**
+  Get current time selected on Picker
+  
+  :returns: NSDate
+  */
+  func getTimePicker() -> NSDate? {
+    var dateAsString = "\(currentHour):\(currentMinute):\(currentSecond)"
+    let date = dateFormatter.dateFromString(dateAsString)
+    return date
+  }
+  
+  public func selectMiddleRowOnScreenWithCurrentTime() {
+    for tableView in componentTables as [NumberPickerTableView] {
+      
+      var index = 0
+      switch tableView.tag {
+      case MINUTE_TAG:
+        index = currentMinute
+      case SECOND_TAG:
+        index = currentSecond
+      default:
+        index = currentHour
+      }
+      
+      scrollToAndSelectIndex(index, tableView: tableView)
+    }
+  }
 }
 
 // *************************************************************************
