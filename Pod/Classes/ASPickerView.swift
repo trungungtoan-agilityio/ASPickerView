@@ -38,7 +38,7 @@ public class ASPickerView: UIControl {
     }
   }
 
-  var delegate: ASPickerViewDelegate?
+  public var delegate: ASPickerViewDelegate?
   
   /// the picker font property. Default font size -> system font 16
   var pickerFont: UIFont = UIFont.systemFontOfSize(16)
