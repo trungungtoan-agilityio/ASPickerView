@@ -32,7 +32,7 @@ public class ASPickerView: UIControl {
   private var componentTables: [NumberPickerTableView]! = []
   private let dateFormatter = NSDateFormatter()
 
-  @IBInspectable var coll: Int = 0 {
+  @IBInspectable public var coll: Int = 0 {
     didSet {
       self.viewInit()
     }
@@ -139,8 +139,8 @@ public class ASPickerView: UIControl {
       sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
       if (separatorView != nil) {
         // TODO
-//        separatorView.frame = CGRectMake(0, 0, 20, 20)
-//        sepView.addSubview(separatorView)
+        separatorView.frame = CGRectMake(0, 0, 20, 20)
+        sepView.addSubview(separatorView)
       } else {
         
         sepView.backgroundColor = separatorColor
