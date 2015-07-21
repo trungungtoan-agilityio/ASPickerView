@@ -17,6 +17,9 @@ private let kMaxTimeCount = 59
 private let kHourLength = 24
 private let kMinuteLength = 60
 private let kMinimumCellHeight: CGFloat = 25.0
+private let kMaximumCellHeight: CGFloat = 50.0
+private let kMinimumCellWidth: CGFloat = 25
+private let kMaximumCellWidth: CGFloat = 40.0
 
 // *************************************************************************
 // MARK: - ASPickerView
@@ -32,7 +35,7 @@ public class ASPickerView: UIControl {
   private var componentTables: [NumberPickerTableView]! = []
   private let dateFormatter = NSDateFormatter()
 
-  @IBInspectable public var coll: Int = 0 {
+  @IBInspectable public var col: Int = 0 {
     didSet {
       self.viewInit()
     }
@@ -49,7 +52,7 @@ public class ASPickerView: UIControl {
   /// the custom view for center picker separator
   public var separatorView: UIView!
   var padding:CGFloat = 5.0
-  var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
+  public var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
   
   @IBInspectable var pickerBackgroundColor = UIColor.whiteColor()
   
@@ -69,18 +72,12 @@ public class ASPickerView: UIControl {
       super.init(coder: aDecoder)
   }
   
-//  override public func layoutSubviews() {
-//    self.backgroundColor = pickerBackgroundColor
-//  }
-  
   func viewInit() {
-    
-//    separatorView = UIView(frame: CGRectMake(0, 0, 20, 20))
-//    separatorView.backgroundColor = UIColor.redColor()
     
     dateFormatter.dateFormat = "H:mm:ss"
     
     cellHeight = self.frame.size.height/7 > kMinimumCellHeight ? self.frame.size.height/7 : kMinimumCellHeight
+    cellHeight = cellHeight < kMaximumCellHeight ? cellHeight : kMaximumCellHeight
     
     // Add gradoent mask on top and bottom picker
     var topGradient = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height/2))
@@ -99,7 +96,7 @@ public class ASPickerView: UIControl {
   
   func layoutView() {
     
-    switch self.coll {
+    switch self.col {
     case 1:
       self.pickerFormat = .FormatSingle
     case 2:
@@ -126,9 +123,8 @@ public class ASPickerView: UIControl {
     
     var index = 0
     var collWidth = CGRectGetWidth(self.frame)/CGFloat(collCount + 1) - padding*CGFloat(collCount)
-    if collWidth > 40 {
-      collWidth = 40
-    }
+    collWidth = collWidth > kMaximumCellWidth ? kMaximumCellWidth : collWidth
+
     var startX = (CGRectGetWidth(self.frame) - (collWidth + padding)*CGFloat(collCount + 1))/2
     
     for _ in 0...collCount {
@@ -136,11 +132,11 @@ public class ASPickerView: UIControl {
       var x0 = startX + collWidth*CGFloat(index) + padding*CGFloat(index)
       
       var sepView: UIView = UIView()
-      sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
+
       if (separatorView != nil) {
-        // TODO
-        separatorView.frame = CGRectMake(0, 0, 20, 20)
-        sepView.addSubview(separatorView)
+  
+        var archivedData: NSData = NSKeyedArchiver.archivedDataWithRootObject(separatorView)
+        sepView = NSKeyedUnarchiver.unarchiveObjectWithData(archivedData) as! UIView
       } else {
         
         sepView.backgroundColor = separatorColor
@@ -148,6 +144,7 @@ public class ASPickerView: UIControl {
         sepView.clipsToBounds = true
       }
       
+      sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
       self.addSubview(sepView)
       
       let tFrame = CGRectMake(x0, 0, collWidth, CGRectGetHeight(self.frame))

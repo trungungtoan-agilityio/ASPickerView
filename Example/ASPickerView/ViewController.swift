@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
+    timePicker.col = 3
     timePicker.backgroundColor = UIColor.whiteColor()
     timePicker.delegate = self
     self.view.addSubview(timePicker)
