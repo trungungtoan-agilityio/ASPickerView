@@ -55,6 +55,4 @@ extension ViewController: ASPickerViewDelegate {
 
 ## Demo
 
-```
-https://github.com/trungung/ASPickerView/blob/develop/demo.gif
-```
+![alt text](https://github.com/trungung/ASPickerView/blob/develop/demo.gif)
