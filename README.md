@@ -41,7 +41,7 @@ self.view.addSubview(timePicker)
 ####	Xib: 
 
 	Applied IBInspectable
-	Set Width/Height and number of coll
+	Set Width/Height and number of col
 
 	
 ####	Delegation:
