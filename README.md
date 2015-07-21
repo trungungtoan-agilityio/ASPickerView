@@ -32,9 +32,11 @@ ASPickerView is available under the MIT license. See the LICENSE file for more i
 #### Initialization
 #####	Programming
 
-	var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
-    timePicker.backgroundColor = UIColor.whiteColor()
-    self.view.addSubview(timePicker)
+```swift
+var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
+timePicker.backgroundColor = UIColor.whiteColor()
+self.view.addSubview(timePicker)
+```
 
 ####	Xib: 
 
@@ -43,11 +45,18 @@ ASPickerView is available under the MIT license. See the LICENSE file for more i
 
 	
 ####	Delegation:
-```
+
+```swift
 extension ViewController: ASPickerViewDelegate {
-	func datePickerDidChange(hour: NSInteger, minute: NSInteger, second: NSInteger) {
-		// Do any additional
-		println("Hour: \(hour) - Minute: \(minute) - Second: \(second)")
-	}
+  func datePickerDidChange(hour: NSInteger, minute: NSInteger, second: NSInteger) {
+    // Do any additional
+	println("Hour: \(hour) - Minute: \(minute) - Second: \(second)")
+  }
 }
+```
+
+## Demo
+
+```
+https://github.com/trungung/ASPickerView/blob/develop/demo.gif
 ```
