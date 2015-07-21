@@ -21,6 +21,7 @@ private let kMinimumCellHeight: CGFloat = 25.0
 // *************************************************************************
 // MARK: - ASPickerView
 
+@IBDesignable
 public class ASPickerView: UIControl {
   
   /// private properties
@@ -31,7 +32,12 @@ public class ASPickerView: UIControl {
   private var componentTables: [NumberPickerTableView]! = []
   private let dateFormatter = NSDateFormatter()
 
-  
+  @IBInspectable var coll: Int = 0 {
+    didSet {
+      self.viewInit()
+    }
+  }
+
   var delegate: ASPickerViewDelegate?
   
   /// the picker font property. Default font size -> system font 16
@@ -58,7 +64,7 @@ public class ASPickerView: UIControl {
   }
 
   required public init(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+      super.init(coder: aDecoder)
   }
   
   func viewInit() {
@@ -79,10 +85,23 @@ public class ASPickerView: UIControl {
   }
   
   func setDefaults() {
-    
+    // TODO
   }
   
   func layoutView() {
+    
+    switch self.coll {
+    case 1:
+      self.pickerFormat = .FormatSingle
+    case 2:
+      self.pickerFormat = .FormatNormal
+    default:
+      self.pickerFormat = .FormatFull
+    }
+    
+    for view in self.subviews {
+      view.removeFromSuperview()
+    }
     
     componentTables.removeAll(keepCapacity: false)
     

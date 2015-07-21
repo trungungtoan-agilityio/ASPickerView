@@ -14,9 +14,9 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    var datePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
-    // datePicker.backgroundColor = UIColor.redColor()
-    self.view.addSubview(datePicker)
+//    var datePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
+//    // datePicker.backgroundColor = UIColor.redColor()
+//    self.view.addSubview(datePicker)
   }
 
   override func didReceiveMemoryWarning() {
