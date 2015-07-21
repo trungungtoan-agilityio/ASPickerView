@@ -14,9 +14,11 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    var datePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
-    // datePicker.backgroundColor = UIColor.redColor()
-    self.view.addSubview(datePicker)
+    var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
+    timePicker.col = 3
+    timePicker.backgroundColor = UIColor.whiteColor()
+    timePicker.delegate = self
+    self.view.addSubview(timePicker)
   }
 
   override func didReceiveMemoryWarning() {
@@ -26,3 +28,9 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: ASPickerViewDelegate {
+  func datePickerDidChange(hour: NSInteger, minute: NSInteger, second: NSInteger) {
+    // Do any additional
+    println("Hour: \(hour) - Minute: \(minute) - Second: \(second)")
+  }
+}
