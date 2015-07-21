@@ -9,14 +9,9 @@
 
 Pod::Spec.new do |s|
   s.name             = "ASPickerView"
-  s.version          = "0.1.1"
-  s.summary          = "A short description of ASPickerView."
-  s.description      = <<-DESC
-                       An optional longer description of ASPickerView
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
+  s.version          = "0.1.2"
+  s.summary          = "The custom UI for UIPicker."
+  s.description      = "The custom UI for UIPicker. ASPickerView is available through CocoaPods"
   s.homepage         = "https://github.com/trungung/ASPickerView.git"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'

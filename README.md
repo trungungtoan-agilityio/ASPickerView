@@ -43,11 +43,18 @@ ASPickerView is available under the MIT license. See the LICENSE file for more i
 
 	
 ####	Delegation:
-```
+
+```swift
 extension ViewController: ASPickerViewDelegate {
 	func datePickerDidChange(hour: NSInteger, minute: NSInteger, second: NSInteger) {
 		// Do any additional
 		println("Hour: \(hour) - Minute: \(minute) - Second: \(second)")
 	}
 }
+```
+
+## Demo
+
+```
+https://github.com/trungung/ASPickerView/blob/develop/demo.gif
 ```
