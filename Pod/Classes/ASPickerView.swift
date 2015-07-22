@@ -16,16 +16,17 @@ private let kTimeCellIndentifier = "TimeCell"
 private let kMaxTimeCount = 59
 private let kHourLength = 24
 private let kMinuteLength = 60
-public var kMinimumCellHeight: CGFloat = 25.0
-public var kMaximumCellHeight: CGFloat = 50.0
-public var kMinimumCellWidth: CGFloat = 25
-public var kMaximumCellWidth: CGFloat = 40.0
 
 // *************************************************************************
 // MARK: - ASPickerView
 
 @IBDesignable
 public class ASPickerView: UIControl {
+  
+  public var kMinimumCellHeight: CGFloat = 25.0
+  public var kMaximumCellHeight: CGFloat = 50.0
+  public var kMinimumCellWidth: CGFloat = 25
+  public var kMaximumCellWidth: CGFloat = 40.0
   
   /// private properties
   private var cellHeight: CGFloat!
@@ -74,6 +75,9 @@ public class ASPickerView: UIControl {
   
   func viewInit() {
     
+    separatorView = UIView(frame: CGRectMake(0, 0, 40, 40))
+    separatorView.backgroundColor = UIColor.blueColor()
+    
     dateFormatter.dateFormat = "H:mm:ss"
     
     cellHeight = self.frame.size.height/7 > kMinimumCellHeight ? self.frame.size.height/7 : kMinimumCellHeight
@@ -94,7 +98,7 @@ public class ASPickerView: UIControl {
     // TODO
   }
   
-  func layoutView() {
+  public func layoutView() {
     
     switch self.col {
     case 1:
