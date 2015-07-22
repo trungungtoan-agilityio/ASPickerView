@@ -75,8 +75,10 @@ public class ASPickerView: UIControl {
   
   func viewInit() {
     
-    separatorView = UIView(frame: CGRectMake(0, 0, 40, 40))
-    separatorView.backgroundColor = UIColor.blueColor()
+//    separatorView = UIView(frame: CGRectMake(0, 0, 40, 40))
+//    separatorView.backgroundColor = UIColor.blueColor()
+//    separatorView.layer.cornerRadius = 6.0;
+//    separatorView.clipsToBounds = true
     
     dateFormatter.dateFormat = "H:mm:ss"
     
@@ -138,7 +140,6 @@ public class ASPickerView: UIControl {
       var sepView: UIView = UIView()
 
       if (separatorView != nil) {
-  
         var archivedData: NSData = NSKeyedArchiver.archivedDataWithRootObject(separatorView)
         sepView = NSKeyedUnarchiver.unarchiveObjectWithData(archivedData) as! UIView
       } else {
