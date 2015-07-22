@@ -45,7 +45,7 @@ public class ASPickerView: UIControl {
   public var delegate: ASPickerViewDelegate?
   
   /// the picker font property. Default font size -> system font 16
-  public var pickerFont: UIFont = UIFont.systemFontOfSize(16)
+  public var pickerFont: UIFont = UIFont.systemFontOfSize(17)
   
   /// the picker format type property. Default is full -> HH:MM:SS
   public var pickerFormat: ASTimePickerFormat = .FormatFull
@@ -394,7 +394,7 @@ class DateFilterCell: UITableViewCell {
     super.setSelected(selected, animated: animated)
     
     if selected {
-      label.font = textFont.fontWithSize(textFont.pointSize + 7)
+      label.font = textFont.fontWithSize(textFont.pointSize + 4)
       label.textColor = UIColor.whiteColor()
     } else {
       label.font = textFont
