@@ -16,10 +16,10 @@ private let kTimeCellIndentifier = "TimeCell"
 private let kMaxTimeCount = 59
 private let kHourLength = 24
 private let kMinuteLength = 60
-private let kMinimumCellHeight: CGFloat = 25.0
-private let kMaximumCellHeight: CGFloat = 50.0
-private let kMinimumCellWidth: CGFloat = 25
-private let kMaximumCellWidth: CGFloat = 40.0
+public var kMinimumCellHeight: CGFloat = 25.0
+public var kMaximumCellHeight: CGFloat = 50.0
+public var kMinimumCellWidth: CGFloat = 25
+public var kMaximumCellWidth: CGFloat = 40.0
 
 // *************************************************************************
 // MARK: - ASPickerView
