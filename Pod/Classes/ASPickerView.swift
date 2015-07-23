@@ -138,10 +138,10 @@ public class ASPickerView: UIControl {
       var x0 = startX + collWidth*CGFloat(index) + padding*CGFloat(index)
       
       var sepView: UIView = UIView()
-
+      
       if (separatorView != nil) {
-        var archivedData: NSData = NSKeyedArchiver.archivedDataWithRootObject(separatorView)
-        sepView = NSKeyedUnarchiver.unarchiveObjectWithData(archivedData) as! UIView
+        sepView = separatorView
+        separatorView = sepView.snapshotViewAfterScreenUpdates(true)
       } else {
         
         sepView.backgroundColor = separatorColor
@@ -151,6 +151,7 @@ public class ASPickerView: UIControl {
       
       sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
       self.addSubview(sepView)
+
       
       let tFrame = CGRectMake(x0, 0, collWidth, CGRectGetHeight(self.frame))
       var tableView = NumberPickerTableView(frame: tFrame, style: UITableViewStyle.Plain)

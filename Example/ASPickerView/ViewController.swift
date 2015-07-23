@@ -18,6 +18,11 @@ class ViewController: UIViewController {
     timePicker.col = 3
     timePicker.backgroundColor = UIColor.whiteColor()
     timePicker.delegate = self
+    var view = UIView(frame: CGRectMake(0, 0, 40, 40))
+//    view.backgroundColor = UIColor.brownColor()
+    view.backgroundColor = UIColor(patternImage: UIImage(named: "add-friend")!)
+    timePicker.separatorView = view
+    timePicker.layoutView()
     self.view.addSubview(timePicker)
   }
 
