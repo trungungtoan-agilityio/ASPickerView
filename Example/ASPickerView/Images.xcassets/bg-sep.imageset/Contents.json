@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "add-friend.png"
+      "filename" : "bg-sep.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "bg-sep@2x.png"
     },
     {
       "idiom" : "universal",

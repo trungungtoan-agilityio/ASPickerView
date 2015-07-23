@@ -24,9 +24,9 @@ private let kMinuteLength = 60
 public class ASPickerView: UIControl {
   
   public var kMinimumCellHeight: CGFloat = 25.0
-  public var kMaximumCellHeight: CGFloat = 50.0
+  public var kMaximumCellHeight: CGFloat = 44.0
   public var kMinimumCellWidth: CGFloat = 25
-  public var kMaximumCellWidth: CGFloat = 40.0
+  public var kMaximumCellWidth: CGFloat = 44.0
   
   /// private properties
   private var cellHeight: CGFloat!
@@ -52,8 +52,8 @@ public class ASPickerView: UIControl {
   
   /// the custom view for center picker separator
   public var separatorView: UIView!
-  var padding:CGFloat = 5.0
-  public var separatorColor = UIColor ( red: 0.4038, green: 0.94, blue: 0.991, alpha: 1.0 )
+  var padding:CGFloat = 10.0
+  public var separatorColor = UIColor ( red: 0.4848, green: 0.7869, blue: 0.8868, alpha: 1.0 )
   
   @IBInspectable var pickerBackgroundColor = UIColor.whiteColor()
   
@@ -138,8 +138,10 @@ public class ASPickerView: UIControl {
       var x0 = startX + collWidth*CGFloat(index) + padding*CGFloat(index)
       
       var sepView: UIView = UIView()
-      
+      var sepHeight = (self.frame.size.height - cellHeight)
+      var separatorFrame = CGRectMake(x0 + 1, (self.frame.size.height - cellHeight)/2 - 5, collWidth, cellHeight + 10)
       if (separatorView != nil) {
+        separatorView.frame = CGRectMake(0, 0, separatorFrame.size.width, separatorFrame.size.height)
         sepView = separatorView
         separatorView = sepView.snapshotViewAfterScreenUpdates(true)
       } else {
@@ -149,7 +151,8 @@ public class ASPickerView: UIControl {
         sepView.clipsToBounds = true
       }
       
-      sepView.frame = CGRectMake(x0 + 3, (self.frame.size.height - cellHeight)/2, collWidth - 6, cellHeight)
+      sepView.frame = separatorFrame
+      
       self.addSubview(sepView)
 
       
@@ -170,7 +173,7 @@ public class ASPickerView: UIControl {
         var separator = UILabel(frame: CGRectMake(tFrame.origin.x + CGRectGetWidth(tFrame), (CGRectGetHeight(self.frame) - 30)/2, padding, 30))
         separator.textAlignment = NSTextAlignment.Center
         separator.textColor = separatorColor
-        separator.font = UIFont.systemFontOfSize(21)
+        separator.font = UIFont(name: "Helvetica-Bold", size: 21)
         separator.text = ":"
         self.addSubview(separator)
       }
@@ -395,7 +398,7 @@ class DateFilterCell: UITableViewCell {
     super.setSelected(selected, animated: animated)
     
     if selected {
-      label.font = textFont.fontWithSize(textFont.pointSize + 4)
+      label.font = textFont.fontWithSize(textFont.pointSize + 5)
       label.textColor = UIColor.whiteColor()
     } else {
       label.font = textFont

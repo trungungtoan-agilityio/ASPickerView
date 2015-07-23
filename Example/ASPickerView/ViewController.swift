@@ -14,13 +14,15 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 200))
+    var timePicker = ASPickerView(frame: CGRectMake(20, 50, 320, 240))
     timePicker.col = 3
     timePicker.backgroundColor = UIColor.whiteColor()
     timePicker.delegate = self
-    var view = UIView(frame: CGRectMake(0, 0, 40, 40))
+    timePicker.separatorColor = UIColor ( red: 0.4848, green: 0.7869, blue: 0.8868, alpha: 1.0 )
+    var image = UIImage(named: "bg-sep")!
+    var view = UIView(frame: CGRectMake(0, 0, image.size.width, image.size.height))
 //    view.backgroundColor = UIColor.brownColor()
-    view.backgroundColor = UIColor(patternImage: UIImage(named: "add-friend")!)
+    view.backgroundColor = UIColor(patternImage: image)
     timePicker.separatorView = view
     timePicker.layoutView()
     self.view.addSubview(timePicker)
